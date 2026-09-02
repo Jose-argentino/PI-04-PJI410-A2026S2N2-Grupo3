@@ -27,16 +27,39 @@
 
 }
 
+
 body{
-    width: 100%;
+    min-width: 100%;
     margin: 0;
     padding: 0;
+    background: var(--background-color-2);
 }
 
 .conteiner{
-    margin: 0 auto;
+    /* margin-top: 0; */
+    /* margin-left: 3vw; */
+    /* margin-right: 3vw; */
     display: flex;
     flex-direction: column;
+    align-items: center;
     padding: 2px;
     gap: 2px;
+}
+
+img{
+    max-width: 95vw;
+}
+
+.parametros{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    width: 40vw;
+}
+
+.box{
+    background: var(--background-color-3);
+    /* min-width: 100%; */
+    width: 50vh;
+    min-height: 50px;
 }
