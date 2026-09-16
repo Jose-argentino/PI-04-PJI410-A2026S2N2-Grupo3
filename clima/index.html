@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Widget de Clima</title>
+  
+  <link rel="stylesheet" href="clima.css">
+  
+  <!-- Biblioteca de Ícones gratuitos Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+  <!-- Container principal (o card do widget) -->
+  <div class="weather-card">
+    
+    <!-- BARRA DE PESQUISA -->
+    <div class="search-box">
+      <i class="ph ph-magnifying-glass search-icon"></i>
+      <input type="text" id="city-input" placeholder="Digite o nome da cidade..." value="São Paulo">
+      <button id="search-btn">Buscar</button>
+    </div>
+
+    <!-- CAIXA que parece ao carregar ou dar erro) -->
+    <div id="status-message" class="status-message hidden"></div>
+
+
+
+
+
+
+    <!-- RESULTADO DO CLIMA -->
+    <div id="weather-content" class="weather-content">
+      
+      <!-- Nome da Cidade e Data -->
+      <div class="location-header">
+        <h2 id="city-name"><i class="ph ph-map-pin"></i> <span>São Paulo, Brasil</span></h2>
+        <p id="current-date">--</p>
+      </div>
+
+
+      <!-- Temperatura Atual e Ícone Principal -->
+      <div class="main-weather">
+        <div class="weather-icon-wrapper">
+          <i id="weather-icon" class="ph ph-sun"></i>
+        </div>
+        <div class="temperature-box">
+          <span id="temperature">--</span><span class="unit">°C</span>
+          <p id="weather-description">--</p>
+        </div>
+      </div>
+
+      <!-- Detalhes do Vento e Umidade -->
+      <div class="weather-details">
+        <div class="detail-card">
+          <i class="ph ph-wind"></i>
+          <div>
+            <p class="label">Vento</p>
+            <p class="value" id="wind-speed">-- km/h</p>
+          </div>
+        </div>
+        <div class="detail-card">
+          <i class="ph ph-drop"></i>
+          <div>
+            <p class="label">Umidade</p>
+            <p class="value" id="humidity">--%</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Previsão dos Próximos 5 Dias -->
+      <div class="forecast-section">
+        <h3>Previsão para os próximos dias</h3>
+        <div class="forecast-container" id="forecast-container">
+          <!-- Os cards dos dias serão gerados dinamicamente pelo JavaScript -->
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Importação do script JavaScript externo -->
+  <script src="clima.js"></script>
+</body>
+</html>
