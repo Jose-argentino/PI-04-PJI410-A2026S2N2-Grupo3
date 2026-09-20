@@ -132,6 +132,8 @@ body {
 }
 
 
+
+/* Temperatura Atual e Ícone Principal */
 .main-weather {
   display: flex;
   align-items: center;
@@ -139,12 +141,14 @@ body {
   margin: 28px 0;
 }
 
+/* icone principal do tempo */
 .weather-icon-wrapper i {
   font-size: 4.8rem;
   color: #38bdf8;
   filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.4));
 }
 
+/* icone de temperatura */
 .temperature-box {
   text-align: right;
 }
