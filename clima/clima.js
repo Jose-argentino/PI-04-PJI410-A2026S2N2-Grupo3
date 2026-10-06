@@ -1,8 +1,9 @@
-/* ==========================================================================
-   1. TRADUÇÃO DOS CÓDIGOS DA OPEN-METEO
+/* 
+   TRADUÇÃO DOS CÓDIGOS DA OPEN-METEO
    A API envia números (códigos WMO) para o clima. Traduzimos para Português
    e associamos ao ícone correto.
-   ========================================================================== */
+*/
+
 const weatherCodeMap = {
   0: { description: "Céu Limpo", icon: "ph-sun" },
   1: { description: "Predominantemente Limpo", icon: "ph-sun-dim" },
@@ -16,10 +17,10 @@ const weatherCodeMap = {
   95: { description: "Trovoada", icon: "ph-cloud-lightning" }
 };
 
-/* ==========================================================================
-   2. SELEÇÃO DOS ELEMENTOS DO HTML
+/* 
+  SELEÇÃO DOS ELEMENTOS DO HTML
    Capturamos os elementos para poder alterar os textos e números via JS.
-   ========================================================================== */
+*/
 const cityInput = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
 const cityNameEl = document.getElementById("city-name");
@@ -32,9 +33,10 @@ const humidityEl = document.getElementById("humidity");
 const forecastContainer = document.getElementById("forecast-container");
 const statusMessage = document.getElementById("status-message");
 
-/* ==========================================================================
-   3. FUNÇÕES UTILITÁRIAS
-   ========================================================================== */
+
+/* 
+  FUNÇÕES UTILITÁRIAS
+*/
 
 // Exibe avisos de "Carregando..." ou erros na tela
 function showStatus(message, isLoading = false) {
@@ -53,9 +55,9 @@ function updateCurrentDate() {
   currentDateEl.textContent = now.toLocaleDateString('pt-BR', options);
 }
 
-/* ==========================================================================
-   4. CONSULTAS ÀS APIs (OPEN-METEO)
-   ========================================================================== */
+/* 
+   CONSULTAS ÀS APIs (OPEN-METEO)
+*/
 
 // Passo A: Transforma o NOME da cidade em LATITUDE e LONGITUDE
 async function fetchCoordinates(cityName) {

@@ -132,7 +132,6 @@ body {
 }
 
 
-
 /* Temperatura Atual e Ícone Principal */
 .main-weather {
   display: flex;
@@ -170,9 +169,9 @@ body {
   text-transform: capitalize;
 }
 
-/* ==========================================================================
-   5. DETALHES (VENTO E UMIDADE)
-   ========================================================================== */
+
+
+/* VENTO E UMIDADE*/
 .weather-details {
   display: flex;
   gap: 12px;
@@ -206,9 +205,9 @@ body {
   font-weight: 600;
 }
 
-/* ==========================================================================
-   6. PREVISÃO DOS PRÓXIMOS DIAS
-   ========================================================================== */
+
+
+/* PREVISÃO DOS PRÓXIMOS DIAS*/
 .forecast-section h3 {
   font-size: 0.85rem;
   color: #94a3b8;
@@ -247,4 +246,12 @@ body {
   font-size: 0.75rem;
   color: #f8fafc;
   font-weight: 600;
+}
+
+#fonte{
+  margin-top: 38px;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }

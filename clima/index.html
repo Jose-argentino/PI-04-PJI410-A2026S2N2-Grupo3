@@ -19,7 +19,7 @@
     <!-- BARRA DE PESQUISA -->
     <div class="search-box">
       <i class="ph ph-magnifying-glass search-icon"></i>
-      <input type="text" id="city-input" placeholder="Digite o nome da cidade..." value="São Paulo">
+      <input type="text" id="city-input" placeholder="Digite o nome da cidade..." value="Nome da Cidade">
       <button id="search-btn">Buscar</button>
     </div>
 
@@ -28,34 +28,36 @@
 
 
 
-
-
-
     <!-- RESULTADO DO CLIMA -->
     <div id="weather-content" class="weather-content">
       
       <!-- Nome da Cidade e Data -->
       <div class="location-header">
-        <h2 id="city-name"><i class="ph ph-map-pin"></i> <span>São Paulo, Brasil</span></h2>
+        <h2 id="city-name"><i class="ph ph-map-pin"></i> <span>- - - </span></h2>
         <p id="current-date">--</p>
       </div>
 
 
-
       <!-- Temperatura Atual e Ícone Principal -->
       <div class="main-weather">
-        /* icone principal do tempo */
+        <!-- icone principal do tempo -->
         <div class="weather-icon-wrapper">
           <i id="weather-icon" class="ph ph-sun"></i>
+          <!-- desclição do tempo -->
+          <p id="weather-description">--</p>
         </div>
+
+        <!-- temperatura atual -->
         <div class="temperature-box">
           <span id="temperature">--</span><span class="unit">°C</span>
-          <p id="weather-description">--</p>
         </div>
       </div>
 
+
+
       <!-- Detalhes do Vento e Umidade -->
       <div class="weather-details">
+
         <div class="detail-card">
           <i class="ph ph-wind"></i>
           <div>
@@ -63,6 +65,7 @@
             <p class="value" id="wind-speed">-- km/h</p>
           </div>
         </div>
+
         <div class="detail-card">
           <i class="ph ph-drop"></i>
           <div>
@@ -71,6 +74,9 @@
           </div>
         </div>
       </div>
+
+
+
 
       <!-- Previsão dos Próximos 5 Dias -->
       <div class="forecast-section">
@@ -81,7 +87,7 @@
       </div>
 
     </div>
-
+    <p id="fonte"><a href="https://open-meteo.com/"> Fonte: OPEN-METEO</a></p>
   </div>
 
   <!-- Importação do script JavaScript externo -->
