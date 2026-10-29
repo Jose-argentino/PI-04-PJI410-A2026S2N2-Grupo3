@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estação Meteorológica - Cafezal</title>
+  
+  <link rel="stylesheet" href="clima.css">
+  
+  <!-- Biblioteca de Ícones Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+
+  <!-- Container principal (Card Glassmorphism) -->
+  <div class="weather-card">
+    
+    <!-- BARRA DE STATUS / ATUALIZAÇÃO -->
+    <div class="search-box">
+      <i class="ph ph-plant search-icon"></i>
+      <input type="text" id="station-input" value="Estação Cafezal" readonly>
+      <button id="refresh-btn"><i class="ph ph-arrows-clockwise"></i> Atualizar</button>
+    </div>
+
+    <!-- CAIXA DE STATUS (Carregando / Erro) -->
+    <div id="status-message" class="status-message hidden"></div>
+
+    <!-- CONTEÚDO DA ESTAÇÃO -->
+    <div id="weather-content" class="weather-content">
+      
+      <!-- Nome da Estação e Data/Hora da última leitura -->
+      <div class="location-header">
+        <h2 id="city-name"><i class="ph ph-map-pin"></i> <span>Monitoramento do Cafezal</span></h2>
+        <p id="current-date">Leitura: --</p>
+      </div>
+
+      <!-- Umidade do Solo em Destaque -->
+      <div class="main-weather">
+        <!-- Ícone dinâmico do solo -->
+        <div class="weather-icon-wrapper">
+          <i id="weather-icon" class="ph ph-drop"></i>
+          <p id="weather-description">--</p>
+        </div>
+
+        <!-- Valor Principal: Umidade do Solo -->
+        <div class="temperature-box">
+          <span id="temperature">--</span><span class="unit">%</span>
+        </div>
+      </div>
+
+      <!-- Detalhes do Clima e Sensores -->
+      <div class="weather-details">
+
+        <div class="detail-card">
+          <i class="ph ph-thermometer-simple"></i>
+          <div>
+            <p class="label">Temp. Ar</p>
+            <p class="value" id="temp-air">-- °C</p>
+          </div>
+        </div>
+
+        <div class="detail-card">
+          <i class="ph ph-cloud-rain"></i>
+          <div>
+            <p class="label">Umidade Ar</p>
+            <p class="value" id="humidity-air">--%</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Outros Sensores da Estação -->
+      <div class="forecast-section">
+        <h3>Outros Indicadores</h3>
+        <div class="forecast-container" id="forecast-container">
+          
+          <div class="forecast-card">
+            <p class="day">Pressão</p>
+            <i class="ph ph-gauge"></i>
+            <p class="temp" id="pressure-val">-- hPa</p>
+          </div>
+
+          <div class="forecast-card">
+            <p class="day">Chuva</p>
+            <i class="ph ph-cloud-rain" id="rain-icon"></i>
+            <p class="temp" id="rain-status">--</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
+  </div>
+
+  <script src="clima.js"></script>
+</body>
+</html>
