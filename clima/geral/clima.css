@@ -248,7 +248,9 @@ body {
   font-weight: 600;
 }
 
-#fonte{
+.linkFonte{
+  text-decoration: none;
+  text-align: center;
   margin-top: 28px;
   text-align: center;
   font-size: 0.75rem;
@@ -256,8 +258,4 @@ body {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-.links{
-  text-decoration: none;
 }
