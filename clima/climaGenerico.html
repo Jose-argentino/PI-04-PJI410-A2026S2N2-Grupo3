@@ -16,17 +16,9 @@
   <!-- Container principal (o card do widget) -->
   <div class="weather-card">
     
-    <!-- BARRA DE PESQUISA -->
-    <div class="search-box">
-      <i class="ph ph-magnifying-glass search-icon"></i>
-      <input type="text" id="city-input" placeholder="Digite o nome da cidade..." value="Nome da Cidade">
-      <button id="search-btn">Buscar</button>
-    </div>
 
-    <!-- CAIXA que parece ao carregar ou dar erro) -->
+    <!-- CAIXA de status (aparece ao carregar ou dar erro) -->
     <div id="status-message" class="status-message hidden"></div>
-
-
 
     <!-- RESULTADO DO CLIMA -->
     <div id="weather-content" class="weather-content">
@@ -37,13 +29,12 @@
         <p id="current-date">--</p>
       </div>
 
-
       <!-- Temperatura Atual e Ícone Principal -->
       <div class="main-weather">
         <!-- icone principal do tempo -->
         <div class="weather-icon-wrapper">
           <i id="weather-icon" class="ph ph-sun"></i>
-          <!-- desclição do tempo -->
+          <!-- descrição do tempo -->
           <p id="weather-description">--</p>
         </div>
 
@@ -53,11 +44,8 @@
         </div>
       </div>
 
-
-
       <!-- Detalhes do Vento e Umidade -->
       <div class="weather-details">
-
         <div class="detail-card">
           <i class="ph ph-wind"></i>
           <div>
@@ -75,9 +63,6 @@
         </div>
       </div>
 
-
-
-
       <!-- Previsão dos Próximos 5 Dias -->
       <div class="forecast-section">
         <h3>Previsão para os próximos dias</h3>
@@ -86,7 +71,22 @@
         </div>
       </div>
 
+      <br>
+      
+      <div class="forecast-section">
+        <h3>Extras</h3>
+        <div class="forecast-container" id="forecast-container">
+          <a class="links" href="local/index.html">
+            <div class="forecast-card">
+              <p class="day">Voltar</p>
+              <i class="ph ph-arrow-fat-line-left"></i>
+            </div>
+          </a>
+
+        </div>
+      </div>
     </div>
+
     <p id="fonte"><a href="https://open-meteo.com/"> Fonte: OPEN-METEO</a></p>
   </div>
 

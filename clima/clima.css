@@ -249,9 +249,15 @@ body {
 }
 
 #fonte{
-  margin-top: 38px;
+  margin-top: 28px;
   text-align: center;
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.links{
+  text-decoration: none;
 }

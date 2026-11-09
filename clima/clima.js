@@ -21,8 +21,6 @@ const weatherCodeMap = {
   SELEÇÃO DOS ELEMENTOS DO HTML
    Capturamos os elementos para poder alterar os textos e números via JS.
 */
-const cityInput = document.getElementById("city-input");
-const searchBtn = document.getElementById("search-btn");
 const cityNameEl = document.getElementById("city-name");
 const currentDateEl = document.getElementById("current-date");
 const temperatureEl = document.getElementById("temperature");
@@ -32,7 +30,6 @@ const windSpeedEl = document.getElementById("wind-speed");
 const humidityEl = document.getElementById("humidity");
 const forecastContainer = document.getElementById("forecast-container");
 const statusMessage = document.getElementById("status-message");
-
 
 /* 
   FUNÇÕES UTILITÁRIAS
@@ -89,7 +86,7 @@ async function fetchWeatherData(lat, lon) {
 }
 
 /* ==========================================================================
-   5. ATUALIZAR A INTERFACE COM OS DADOS DA API
+   ATUALIZAR A INTERFACE COM OS DADOS DA API
    ========================================================================== */
 function updateUI(locationName, weatherData) {
   // Atualiza Nome da Cidade
@@ -134,7 +131,7 @@ function updateUI(locationName, weatherData) {
 }
 
 /* ==========================================================================
-   6. EXECUÇÃO DA BUSCA
+   EXECUÇÃO DA BUSCA
    ========================================================================== */
 async function searchWeather(cityName) {
   if (!cityName.trim()) return;
@@ -153,14 +150,7 @@ async function searchWeather(cityName) {
 }
 
 /* ==========================================================================
-   7. EVENTOS (Cliques e Teclas)
+   INICIALIZAÇÃO AUTOMÁTICA
    ========================================================================== */
-searchBtn.addEventListener("click", () => searchWeather(cityInput.value));
-
-cityInput.addEventListener("keyup", (e) => {
-  if (e.key === "Enter") searchWeather(cityInput.value);
-});
-
-// Inicialização ao abrir a página
 updateCurrentDate();
-searchWeather("São Paulo");
+searchWeather("Tambaú");
