@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #a5bbec, #496696);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  color: #f8fafc;
+}
+
+/* Container principal (Card Glassmorphism) */
+.weather-card {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 28px;
+  width: 100%;
+  max-width:98%; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Nome da Estação e Subtítulo */
+.location-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location-header h2 i {
+  color: #38bdf8;
+}
+
+.location-header p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Caixa de Mensagem de Status */
+.status-message {
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  background: rgba(239, 68, 68, 0.2);
+  color: #eb4242;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-message.loading {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Seção de Ações / Botões */
+.forecast-section{
+  display: flex;
+  justify-content: space-around;
+}
+
+.forecast-section h3 {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+
+.forecast-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px 8px;
+  text-align: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.forecast-card:hover {
+  background: rgba(15, 23, 42, 0.7);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.forecast-card .day {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.forecast-card i {
+  font-size: 1.2rem;
+  color: #38bdf8;
+}
+
+a.links {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+a.links:visited,
+a.links:hover,
+a.links:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Rodapé / Fonte dos dados */
+#fonte {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

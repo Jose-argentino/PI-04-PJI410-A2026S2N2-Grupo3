@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Estação Meteorológica - Cafezal</title>
   
-  <link rel="stylesheet" href="clima.css">
-  
   <!-- Biblioteca de Ícones Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+  <link rel="stylesheet" href="estacao.css">
+
 </head>
 
 <body>
@@ -25,6 +26,8 @@
 
     <!-- CAIXA DE STATUS (Carregando / Erro) -->
     <div id="status-message" class="status-message hidden"></div>
+
+
 
     <!-- CONTEÚDO DA ESTAÇÃO -->
     <div id="weather-content" class="weather-content">
@@ -49,9 +52,11 @@
         </div>
       </div>
 
+
       <!-- Detalhes do Clima e Sensores -->
       <div class="weather-details">
 
+        <!-- temperatura do ar -->
         <div class="detail-card">
           <i class="ph ph-thermometer-simple"></i>
           <div>
@@ -70,6 +75,7 @@
 
       </div>
 
+      
       <!-- Outros Sensores da Estação -->
       <div class="forecast-section">
         <h3>Outros Indicadores</h3>
@@ -96,19 +102,32 @@
       <div class="forecast-section">
         <h3>Ver mais</h3>
         <div class="forecast-container" id="forecast-container">
-          <a class="links" href="../geral/climaGenerico.html">
-            <div class="forecast-card">
-              <p class="day">Previsão do pempo</p>
+
+          <div class="forecast-card">
+            <a class="links" href="../geral/climaGenerico.html">
+              <p class="day">Previsão do clima</p>
               <i class="ph ph-asterisk"></i>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
+
+          <div class="forecast-card">
+            <a class="links" href="../historico/historico.html">
+              <p class="day">Histórico do Solo</p>
+              <i class="ph ph-chart-line"></i>
+            </a>
+          </div>
+
+          </div>
+
       </div>
+
+    
+
     </div>
 
     <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
   </div>
 
-  <script src="clima.js"></script>
+  <script src="estacao.js"></script>
 </body>
 </html>

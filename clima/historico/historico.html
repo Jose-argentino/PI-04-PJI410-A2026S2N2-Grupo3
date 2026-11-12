@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Histórico - Umidade do Solo (7 Dias)</title>
+  
+  <!-- Biblioteca de Ícones Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="historico.css">
+  <!-- Biblioteca Chart.js para criar o gráfico dos últimos dias -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+  <!-- Container principal -->
+  <div class="weather-card">
+        
+        <div class="location-header">
+          <h2><i class="ph ph-chart-line"></i> <span>Histórico da Umidade do Solo</span></h2>
+          <p id="current-date">Carregando histórico...</p>
+        </div>
+
+        <!-- CAIXA DE STATUS -->
+        <div id="status-message" class="status-message hidden"></div>
+
+        <!-- GRÁFICO DE HISTÓRICO -->
+        <div style="position: relative; height:350px; width:100%; margin-top: 20px;">
+          <canvas id="soilHistoryChart"></canvas>
+        </div>
+
+        <br>
+
+        <!-- BOTÃO DE VOLTAR -->
+        <div class="forecast-section">
+          <a class="links" href="../local/estacao.html">
+            <div class="forecast-card" style="text-align: center;">
+              <p class="day">Voltar</p>
+              <i class="ph ph-arrow-fat-line-left"></i>
+            </div>
+          </a>
+
+          <a class="links" href="historicoDetalhado.html">
+            <div class="forecast-card" style="text-align: center;">
+              <p class="day">Ver Mais</p>
+              <i class="ph ph-arrow-fat-line-right"></i>
+              <p class="day">Dados</p>
+            </div>
+          </a>
+
+
+        </div>
+
+    </div>
+
+      <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
+  </div>
+  <!-- Script de Conexão e Geração do Gráfico -->
+  <script src="historico.js"></script>
+</body>
+</html>
