@@ -1,0 +1,40 @@
+.recommendation-card {
+      padding: 16px 20px;
+      border-radius: 16px;
+      color: #f8fafc;
+      font-weight: 600;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    .status-green { 
+      background: rgba(46, 125, 50, 0.4); 
+      border-color: rgba(46, 125, 50, 0.5);
+    }  /* Não precisa irrigar */
+    .status-yellow { 
+      background: rgba(245, 127, 23, 0.4); 
+      border-color: rgba(245, 127, 23, 0.5);
+    } /* Atenção / Intervenção breve */
+    .status-red { 
+      background: rgba(198, 40, 40, 0.4); 
+      border-color: rgba(198, 40, 40, 0.5);
+    }    /* Necessário irrigação */
+
+    .recommendation-card i { 
+      font-size: 2.2rem; 
+      color: #38bdf8; 
+    }
+    .recommendation-text h4 { 
+      margin: 0 0 4px 0; 
+      font-size: 1.05rem; 
+      font-weight: 600;
+    }
+    .recommendation-text p { 
+      margin: 0; 
+      font-weight: 400; 
+      font-size: 0.85rem; 
+      color: #cbd5e1;
+    }

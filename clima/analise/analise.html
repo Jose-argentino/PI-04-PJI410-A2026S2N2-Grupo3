@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Previsão e Recomendação de Irrigação (IA)</title>
+  
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Chart.js para o gráfico combinado (Real + Previsão) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <link rel="stylesheet" href="analise.css">
+</head>
+
+<body>
+
+  <div class="weather-card" style="max-width: 850px; margin: 20px auto;">
+    
+    <div class="location-header">
+      <h2><i class="ph ph-trend-up"></i> <span>Previsão de Umidade & Recomendação IA</span></h2>
+      <p id="current-date">Analisando dados do Firestore...</p>
+    </div>
+
+    <!-- CAIXA DE STATUS -->
+    <div id="status-message" class="status-message hidden"></div>
+
+    <!-- PAINEL DE RECOMENDAÇÃO FUTURA (VERDE / AMARELO / VERMELHO) -->
+    <div id="recommendation-box" class="recommendation-card status-green">
+      <i id="rec-icon" class="ph ph-check-circle"></i>
+      <div class="recommendation-text">
+        <h4 id="rec-title">Analisando...</h4>
+        <p id="rec-desc">Processando modelo estatístico de regressão...</p>
+      </div>
+    </div>
+
+    <!-- GRÁFICO (24h Passadas + 6h Futuras) -->
+    <div style="position: relative; height:380px; width:100%; margin-top: 25px;">
+      <canvas id="forecastChart"></canvas>
+    </div>
+
+    <br>
+
+    <!-- NAVEGAÇÃO -->
+    <div class="forecast-section">
+      <a class="links" href="index.html">
+        <div class="forecast-card" style="text-align: center;">
+          <p class="day"><i class="ph ph-arrow-left"></i> Voltar ao Painel Principal</p>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
+
+  <script src="analise.js"></script>
+</body>
+</html>
