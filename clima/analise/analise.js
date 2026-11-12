@@ -13,8 +13,9 @@ function decodificar(campo) {
   return null;
 }
 
+// -------------------------------------------------------------
 // ALGORITMO DE MACHINE LEARNING: Regressão Linear Simples
-
+// -------------------------------------------------------------
 function treinarModeloRegressao(x, y) {
   const n = x.length;
   let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
