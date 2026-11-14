@@ -17,48 +17,60 @@
   <!-- Container principal com a mesma classe e visual em Glassmorphism da referência -->
   <div class="weather-card wide-card">
     
-    <div class="location-header">
-      <h2><i class="ph ph-trend-up"></i> <span>Previsão de Umidade & Recomendação IA</span></h2>
-      <p id="current-date">Analisando dados do Firestore...</p>
-    </div>
-
-    <!-- CAIXA DE STATUS -->
-    <div id="status-message" class="status-message hidden"></div>
-
-    <!-- PAINEL DE RECOMENDAÇÃO FUTURA (VERDE / AMARELO / VERMELHO) -->
-    <div id="recommendation-box" class="recommendation-card status-green">
-      <i id="rec-icon" class="ph ph-check-circle"></i>
-      <div class="recommendation-text">
-        <h4 id="rec-title">Analisando...</h4>
-        <p id="rec-desc">Processando modelo estatístico de regressão...</p>
+      <div class="location-header">
+        <h2><i class="ph ph-trend-up"></i> <span>Previsão de Umidade & Recomendação IA</span></h2>
+        <p id="current-date">Analisando dados do Firestore...</p>
       </div>
-    </div>
 
-    <!-- GRÁFICO (24h Passadas + 6h Futuras) -->
-    <div style="position: relative; height:380px; width:100%; margin-top: 25px;">
-      <canvas id="forecastChart"></canvas>
-    </div>
+      <!-- CAIXA DE STATUS -->
+      <div id="status-message" class="status-message hidden"></div>
 
-    <br>
-
-    <!-- NAVEGAÇÃO DE BOTÕES (Mesmo padrão da referência) -->
-    <div class="forecast-section">
-      <a class="links" href="historico.html">
-        <div class="forecast-card" style="text-align: center;">
-          <p class="day">Histórico Detalhado</p>
-          <i class="ph ph-table"></i>
+      <!-- PAINEL DE RECOMENDAÇÃO FUTURA (VERDE / AMARELO / VERMELHO) -->
+      <div id="recommendation-box" class="recommendation-card status-green">
+        <i id="rec-icon" class="ph ph-check-circle"></i>
+        <div class="recommendation-text">
+          <h4 id="rec-title">Analisando...</h4>
+          <p id="rec-desc">Processando modelo estatístico de regressão...</p>
         </div>
-      </a>
+      </div>
 
-      <a class="links" href="../local/estacao.html">
-        <div class="forecast-card" style="text-align: center;">
-          <p class="day">Painel Principal</p>
-          <i class="ph ph-arrow-fat-line-left"></i>
+      <!-- GRÁFICO (24h Passadas + 6h Futuras) -->
+      <div style="position: relative; height:380px; width:100%; margin-top: 25px;">
+        <canvas id="forecastChart"></canvas>
+      </div>
+
+      <br>
+
+      <!-- NAVEGAÇÃO DE BOTÕES (Mesmo padrão da referência) -->
+      <div class="forecast-section">
+        <h3>Ver mais</h3>
+        <div class="forecast-container" id="forecast-container">
+
+          <div class="forecast-card">
+            <a class="links" href="../local/estacao.html">
+              <p class="day">Voltar</p>
+              <i class="ph ph-arrow-fat-line-left"></i>
+            </a>
+          </div>
+
+          <div class="forecast-card">
+            <a class="links" href="../geral/climaGenerico.html">
+              <p class="day">Previsão do clima</p>
+              <i class="ph ph-asterisk"></i>
+            </a>
+          </div>
+
+          <div class="forecast-card">
+            <a class="links" href="../historico/historico.html">
+              <p class="day">Histórico do Solo</p>
+              <i class="ph ph-chart-line"></i>
+            </a>
+          </div>   
+
         </div>
-      </a>
-    </div>
+      </div>
 
-  </div>
+    </div>
 
   <p id="fonte">Fonte: Estação Telemetria FIRESTORE | Modelo: Regressão Linear / Tendência</p>
 

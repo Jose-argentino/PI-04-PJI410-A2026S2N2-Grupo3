@@ -13,11 +13,20 @@ function decodificar(campo) {
   return null;
 }
 
+// Converte o valor bruto (raw) do solo em porcentagem usando a fórmula de calibração
+function calcularUmidadePorRaw(raw) {
+  const L = Number(raw);
+  if (isNaN(L) || L <= 0) return 0.0;
+  let porcentagem = (-0.182 * L) + 163.6;
+  return Math.max(0, Math.min(100, porcentagem));
+}
+
 // -------------------------------------------------------------
 // ALGORITMO DE MACHINE LEARNING: Regressão Linear Simples
 // -------------------------------------------------------------
 function treinarModeloRegressao(x, y) {
   const n = x.length;
+  if (n === 0) return { prever: () => 50, inclinacao: 0 };
   let sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
 
   for (let i = 0; i < n; i++) {
@@ -27,7 +36,8 @@ function treinarModeloRegressao(x, y) {
     sumXX += x[i] * x[i];
   }
 
-  const inclinacao = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+  const denominador = (n * sumXX - sumX * sumX);
+  const inclinacao = denominador === 0 ? 0 : (n * sumXY - sumX * sumY) / denominador;
   const intercepto = (sumY - inclinacao * sumX) / n;
 
   return {
@@ -41,10 +51,11 @@ async function carregarEPrever() {
     statusMessage.textContent = "Carregando telemetria e calculando tendência ML...";
     statusMessage.className = "status-message loading";
 
+    // ORDENAÇÃO CORRIGIDA: Usa packetCounter em vez de timestamp (evita falhas com valores nulos)
     const payload = {
       structuredQuery: {
         from: [{ collectionId: "telemetry" }],
-        orderBy: [{ field: { fieldPath: "timestamp" }, direction: "DESCENDING" }],
+        orderBy: [{ field: { fieldPath: "packetCounter" }, direction: "DESCENDING" }],
         limit: 24 
       }
     };
@@ -55,11 +66,16 @@ async function carregarEPrever() {
       body: JSON.stringify(payload)
     });
 
-    const resultado = await response.json();
-    if (!resultado || !resultado[0] || !resultado[0].document) {
-      throw new Error("Nenhum dado encontrado no banco.");
+    if (!response.ok) {
+      throw new Error(`Erro HTTP ao acessar Firestore: ${response.status}`);
     }
 
+    const resultado = await response.json();
+    if (!resultado || !resultado[0] || !resultado[0].document) {
+      throw new Error("Nenhum dado encontrado no banco de dados.");
+    }
+
+    // Inverte para colocar em ordem cronológica (mais antigo para mais recente)
     const leituras = resultado.reverse();
 
     let labelsHistorico = [];
@@ -76,11 +92,20 @@ async function carregarEPrever() {
         if (!isNaN(d)) hora = d.toLocaleTimeString("pt-BR", { hour: '2-digit', minute: '2-digit' });
       }
 
-      let umidade = Number(decodificar(campos.soil) || 0);
-      if (Boolean(decodificar(campos.rain))) chuvaRecente = true;
+      // Utiliza o soilRaw1 aplicando a fórmula de calibração correta
+      const raw1 = decodificar(campos.soilRaw1) ?? decodificar(campos.soil) ?? 0;
+      let umidade = calcularUmidadePorRaw(raw1);
+
+      // Verificação de chuva sensível
+      const rainRaw = decodificar(campos.rainRaw) ?? 4095;
+      const digitalChuva = decodificar(campos.digitalChuva);
+      const boolChuvaOriginal = Boolean(decodificar(campos.rain));
+      if ((digitalChuva === 0) || (rainRaw < 3800) || boolChuvaOriginal) {
+        chuvaRecente = true;
+      }
 
       labelsHistorico.push(hora || `H-${24 - index}`);
-      dadosHistorico.push(umidade);
+      dadosHistorico.push(Number(umidade.toFixed(1)));
       dadosEixoX.push(index);
     });
 
@@ -88,9 +113,9 @@ async function carregarEPrever() {
 
     let labelsPrevisao = [];
     let dadosPrevisao = [];
-    let ultimoEixoX = dadosEixoX[dadosEixoX.length - 1];
+    let ultimoEixoX = dadosEixoX[dadosEixoX.length - 1] || 0;
 
-    dadosPrevisao.push(dadosHistorico[dadosHistorico.length - 1]);
+    dadosPrevisao.push(dadosHistorico[dadosHistorico.length - 1] || 0);
 
     for (let i = 1; i <= 6; i++) {
       let valorFuturo = modelo.prever(ultimoEixoX + i);
@@ -103,7 +128,7 @@ async function carregarEPrever() {
     const datasetPrevisaoAlinhado = [...Array(dadosHistorico.length - 1).fill(null), ...dadosPrevisao];
 
     const menorUmidadePrevista = Math.min(...dadosPrevisao);
-    const umidadeAtual = dadosHistorico[dadosHistorico.length - 1];
+    const umidadeAtual = dadosHistorico[dadosHistorico.length - 1] || 0;
 
     atualizarRecomendacao(umidadeAtual, menorUmidadePrevista, chuvaRecente, modelo.inclinacao);
     renderizarGrafico(todosLabels, datasetHistoricoAlinhado, datasetPrevisaoAlinhado);
@@ -112,8 +137,12 @@ async function carregarEPrever() {
     statusMessage.className = "status-message hidden";
 
   } catch (error) {
-    statusMessage.textContent = error.message;
+    console.error("Erro na Análise IA:", error);
+    statusMessage.textContent = "Erro ao carregar dados: " + error.message;
     statusMessage.className = "status-message";
+
+    // Exibe o erro visualmente no card para não travar na mensagem "Analisando..."
+    exibirErroRecomendacao(error.message);
   }
 }
 
@@ -125,22 +154,34 @@ function atualizarRecomendacao(atual, prevista, chovendo, inclinacao) {
 
   if (prevista < 30 || atual < 30) {
     box.className = "recommendation-card status-red";
-    icon.className = "ph ph-warning-octagon";
-    title.textContent = "Irrigação Necessária!";
-    desc.textContent = `A umidade prevista para as próximas horas é de ${prevista}%. Solo entrará em estado crítico de seca.`;
+    if (icon) icon.className = "ph ph-warning-octagon";
+    if (title) title.textContent = "Irrigação Necessária!";
+    if (desc) desc.textContent = `A umidade prevista para as próximas horas é de ${prevista}%. Solo entrará em estado crítico de seca.`;
   } 
   else if (prevista <= 50 || (inclinacao < -1.5 && !chovendo)) {
     box.className = "recommendation-card status-yellow";
-    icon.className = "ph ph-warning";
-    title.textContent = "Atenção: Intervenção em breve";
-    desc.textContent = `Tendência de queda acentuada. Umidade projetada: ${prevista}%. Verifique a previsão do tempo antes de acionar.`;
+    if (icon) icon.className = "ph ph-warning";
+    if (title) title.textContent = "Atenção: Intervenção em breve";
+    if (desc) desc.textContent = `Tendência de queda acentuada. Umidade projetada: ${prevista}%. Verifique a previsão do tempo antes de acionar.`;
   } 
   else {
     box.className = "recommendation-card status-green";
-    icon.className = "ph ph-check-circle";
-    title.textContent = "Não necessita de irrigação";
-    desc.textContent = `Solo em ótimas condições! A umidade prevista para as próximas 6 horas se manterá estável em ~${prevista}%.`;
+    if (icon) icon.className = "ph ph-check-circle";
+    if (title) title.textContent = "Não necessita de irrigação";
+    if (desc) desc.textContent = `Solo em ótimas condições! A umidade prevista para as próximas 6 horas se manterá estável em ~${prevista}%.`;
   }
+}
+
+function exibirErroRecomendacao(mensagemErro) {
+  const box = document.getElementById("recommendation-box");
+  const icon = document.getElementById("rec-icon");
+  const title = document.getElementById("rec-title");
+  const desc = document.getElementById("rec-desc");
+
+  if (box) box.className = "recommendation-card status-red";
+  if (icon) icon.className = "ph ph-warning";
+  if (title) title.textContent = "Falha ao carregar dados";
+  if (desc) desc.textContent = mensagemErro;
 }
 
 function renderizarGrafico(labels, dadosReais, dadosPrevistos) {

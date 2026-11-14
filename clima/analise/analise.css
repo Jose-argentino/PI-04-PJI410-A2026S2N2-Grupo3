@@ -114,10 +114,22 @@ body {
 }
 
 /* Seções de Navegação */
-.forecast-section {
+
+.forecast-card:hover {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.forecast-section h3 {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.forecast-container {
   display: flex;
-  justify-content: space-around;
-  gap: 15px;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .forecast-card {
@@ -125,39 +137,41 @@ body {
   background: rgba(15, 23, 42, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  padding: 12px 16px;
+  padding: 12px 8px;
   text-align: center;
-  transition: background 0.2s;
-}
-
-.forecast-card:hover {
-  background: rgba(15, 23, 42, 0.7);
 }
 
 .forecast-card .day {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: #cbd5e1;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
 }
 
 .forecast-card i {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #38bdf8;
+  margin: 6px 0;
 }
 
-a.links {
+.forecast-card .temp {
+  font-size: 0.85rem;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.forecast-card a:visited,
+.forecast-card a:hover,
+.forecast-card a:active {
   text-decoration: none;
   color: inherit;
-  display: block;
-  flex: 1;
+}
+
+.links {
+  text-decoration: none;
 }
 
 #fonte {
-  margin-top: 24px;
+  margin-top: 28px;
   text-align: center;
   font-size: 0.75rem;
   color: #94a3b8;
