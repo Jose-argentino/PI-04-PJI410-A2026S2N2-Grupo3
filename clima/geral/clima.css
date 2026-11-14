@@ -246,6 +246,18 @@ body {
   font-size: 0.75rem;
   color: #f8fafc;
   font-weight: 600;
+  justify-content: center;
+}
+
+.forecast-card a:visited,
+.forecast-card a:hover,
+.forecast-card a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+.links {
+  text-decoration: none;
 }
 
 .linkFonte{

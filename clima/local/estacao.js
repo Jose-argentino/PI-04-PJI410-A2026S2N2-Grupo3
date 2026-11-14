@@ -14,6 +14,7 @@ const pressureValEl = document.getElementById("pressure-val");
 const rainStatusEl = document.getElementById("rain-status");
 const rainIconEl = document.getElementById("rain-icon");
 const statusMessage = document.getElementById("status-message");
+const debugJsonEl = document.getElementById("debug-json");
 
 // Função para tratar tipos de dados do Firestore
 function decodificar(campo) {
@@ -33,6 +34,21 @@ function showStatus(message, isLoading = false) {
 
 function hideStatus() {
   statusMessage.className = "status-message hidden";
+}
+
+/**
+ * Converte o valor cru (soilRaw1) em porcentagem usando a fórmula de calibração:
+ * Porcentagem = -0.182 * L + 163.6 (com limite de segurança entre 0% e 100%)
+ */
+function calcularUmidadePorRaw(raw) {
+  const L = Number(raw);
+  if (isNaN(L) || L <= 0) return 0.0;
+
+  // Aplicação da fórmula informada pela equipe
+  let porcentagem = (-0.182 * L) + 163.6;
+
+  // Garante que o valor fique estritamente entre 0% e 100%
+  return Math.max(0, Math.min(100, porcentagem));
 }
 
 // Avalia a Umidade do Solo para fornecer um indicador dinâmico
@@ -77,6 +93,13 @@ async function buscarDadosEstacao() {
 
     const campos = resultado[0].document.fields || {};
 
+    // Depuração opcional no console para acompanhar os valores crus
+    let objetoBrutoParaDebug = {};
+    for (let chave in campos) {
+      objetoBrutoParaDebug[chave] = decodificar(campos[chave]);
+    }
+    console.log("Dados recebidos da estação:", objetoBrutoParaDebug);
+
     // Extração do Horário
     let horario = decodificar(campos.horaLeitura) || 
                   decodificar(campos.createdAtIso) || 
@@ -94,13 +117,17 @@ async function buscarDadosEstacao() {
       }
     }
 
+    // Processamento do Solo: IGNORA o 'soil' travado em 100 e calcula usando o 'soilRaw1' (L)
+    const rawSolo1 = decodificar(campos.soilRaw1) ?? decodificar(campos.soil) ?? 0;
+    const umidadeCalculada = calcularUmidadePorRaw(rawSolo1);
+
     // Processamento dos Sensores
     const dados = {
       horario: horario || "Recente",
       temperatura: Number(decodificar(campos.temp) || 0).toFixed(1),
       umidadeAr: Number(decodificar(campos.hum) || 0).toFixed(1),
       pressao: Number(decodificar(campos.pabs) || 1013.2).toFixed(1),
-      umidadeSolo: Number(decodificar(campos.soil) || 0).toFixed(1),
+      umidadeSolo: umidadeCalculada.toFixed(1),
       precipitacao: Boolean(decodificar(campos.rain))
     };
 

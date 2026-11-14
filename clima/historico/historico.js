@@ -23,16 +23,23 @@ function decodificar(campo) {
   return null;
 }
 
+// Converte o valor bruto (raw) do sensor em porcentagem usando a fórmula de calibração
+function calcularUmidadePorRaw(raw) {
+  const L = Number(raw);
+  if (isNaN(L) || L <= 0) return 0.0;
+  let porcentagem = (-0.182 * L) + 163.6;
+  return Math.max(0, Math.min(100, porcentagem));
+}
+
 async function buscarHistoricoSolo() {
   try {
-    showStatus("Buscando histórico dos últimos dias...", true);
+    showStatus("Buscando histórico dos sensores...", true);
 
-    // Ajuste o limit conforme a quantidade de leituras que você quer trazer (ex: 50 ou 100 últimas leituras)
     const payload = {
       structuredQuery: {
         from: [{ collectionId: "telemetry" }],
         orderBy: [{ field: { fieldPath: "timestamp" }, direction: "DESCENDING" }],
-        limit: 200
+        limit: 100
       }
     };
 
@@ -52,11 +59,12 @@ async function buscarHistoricoSolo() {
       throw new Error("Nenhum registro encontrado na telemetria.");
     }
 
-    // Processar os documentos retornados
     let labels = [];
-    let dadosUmidade = [];
+    let dadosMedia = [];
+    let dados15 = [];
+    let dados30 = [];
 
-    // O Firestore retorna do mais recente para o mais antigo, invertemos para exibir cronologicamente no gráfico
+    // O Firestore retorna do mais recente para o mais antigo, invertemos para exibir cronologicamente
     resultado.reverse().forEach(item => {
       const campos = item.document.fields || {};
       
@@ -67,7 +75,6 @@ async function buscarHistoricoSolo() {
       if (horario) {
         const dataObj = new Date(horario);
         if (!isNaN(dataObj)) {
-          // Formata a data/hora para o eixo X do gráfico
           horario = dataObj.toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
@@ -77,37 +84,47 @@ async function buscarHistoricoSolo() {
         }
       }
 
-      const soilVal = Number(decodificar(campos.soil) || 0).toFixed(1);
+      // Obtém os valores crus (raw) de cada sensor
+      const raw1 = decodificar(campos.soilRaw1) ?? decodificar(campos.soil) ?? 0;
+      const raw2 = decodificar(campos.soilRaw2) ?? decodificar(campos.soil) ?? 0;
+
+      const val1 = calcularUmidadePorRaw(raw1);
+      const val2 = calcularUmidadePorRaw(raw2);
+      const media = (val1 + val2) / 2;
 
       labels.push(horario || "Desconhecido");
-      dadosUmidade.push(soilVal);
+      dadosMedia.push(media.toFixed(1));
+      dados15.push(val1.toFixed(1));
+      dados30.push(val2.toFixed(1));
     });
 
-    currentDateEl.textContent = "Dados carregados com sucesso.";
+    currentDateEl.textContent = "Histórico carregado com sucesso.";
     hideStatus();
 
-    // Renderizar o Gráfico com Chart.js
-    renderizarGrafico(labels, dadosUmidade);
+    // Renderizar os 3 gráficos independentes com Chart.js
+    renderizarGrafico('soilMediaChart', 'Média dos Sensores (%)', labels, dadosMedia, '#38bdf8', 'rgba(56, 189, 248, 0.15)');
+    // renderizarGrafico('soil15Chart', 'Sensor 15 cm (soilRaw1) (%)', labels, dados15, '#10b981', 'rgba(16, 185, 129, 0.15)');
+    // renderizarGrafico('soil30Chart', 'Sensor 30 cm (soilRaw2) (%)', labels, dados30, '#f59e0b', 'rgba(245, 158, 11, 0.15)');
 
   } catch (error) {
     showStatus(error.message, false);
   }
 }
 
-function renderizarGrafico(labels, dados) {
-  const ctx = document.getElementById('soilHistoryChart').getContext('2d');
+function renderizarGrafico(canvasId, labelNome, labels, dados, corBorda, corFundo) {
+  const ctx = document.getElementById(canvasId).getContext('2d');
   
   new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
       datasets: [{
-        label: 'Umidade do Solo (%)',
+        label: labelNome,
         data: dados,
-        borderColor: '#38bdf8',
-        backgroundColor: 'rgba(56, 189, 248, 0.15)',
+        borderColor: corBorda,
+        backgroundColor: corFundo,
         borderWidth: 2,
-        pointBackgroundColor: '#38bdf8',
+        pointBackgroundColor: corBorda,
         pointRadius: 2,
         fill: true,
         tension: 0.3
@@ -139,5 +156,6 @@ function renderizarGrafico(labels, dados) {
     }
   });
 }
+
 // Executa a busca ao carregar a página
 buscarHistoricoSolo();

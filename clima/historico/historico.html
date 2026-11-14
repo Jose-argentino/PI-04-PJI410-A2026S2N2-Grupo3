@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Histórico - Umidade do Solo (7 Dias)</title>
+  <title>Histórico - Umidade do Solo</title>
   
   <!-- Biblioteca de Ícones Phosphor Icons -->
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <link rel="stylesheet" href="historico.css">
-  <!-- Biblioteca Chart.js para criar o gráfico dos últimos dias -->
+  <!-- Biblioteca Chart.js para criar os gráficos -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -25,12 +25,43 @@
         <!-- CAIXA DE STATUS -->
         <div id="status-message" class="status-message hidden"></div>
 
-        <!-- GRÁFICO DE HISTÓRICO -->
-        <div style="position: relative; height:350px; width:100%; margin-top: 20px;">
-          <canvas id="soilHistoryChart"></canvas>
+        <!-- GRÁFICO 1: MÉDIA DOS SENSORES -->
+        <div style="margin-top: 20px;">
+          <h3 style="color: #38bdf8; font-size: 0.9rem; margin-bottom: 6px; text-transform: uppercase;">
+            <i class="ph ph-chart-line-up"></i> Média dos 2 Sensores (15cm e 30cm)
+          </h3>
+          <div style="position: relative; height:240px; width:100%;">
+            <canvas id="soilMediaChart"></canvas>
+          </div>
         </div>
 
+<!-- 
         <br>
+        <br>
+        
+aqui viria os outros 2 graficos
+       
+1 - sensor 15 cm
+        <div style="margin-top: 25px;">
+          <h3 style="color: #10b981; font-size: 0.9rem; margin-bottom: 6px; text-transform: uppercase;">
+            <i class="ph ph-plant"></i> Sensor a 15 cm (soilRaw1)
+          </h3>
+          <div style="position: relative; height:240px; width:100%;">
+            <canvas id="soil15Chart"></canvas>
+          </div>
+        </div>
+
+2 - sensor 30 cm       
+        <div style="margin-top: 25px;">
+          <h3 style="color: #f59e0b; font-size: 0.9rem; margin-bottom: 6px; text-transform: uppercase;">
+            <i class="ph ph-plant"></i> Sensor a 30 cm (soilRaw2)
+          </h3>
+          <div style="position: relative; height:240px; width:100%;">
+            <canvas id="soil30Chart"></canvas>
+          </div>
+        </div>
+
+-->
 
         <!-- BOTÃO DE VOLTAR -->
         <div class="forecast-section">
@@ -48,15 +79,14 @@
               <p class="day">Dados</p>
             </div>
           </a>
-
-
         </div>
 
     </div>
 
-      <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
+    <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
   </div>
-  <!-- Script de Conexão e Geração do Gráfico -->
+
+  <!-- Script de Conexão e Geração dos Gráficos -->
   <script src="historico.js"></script>
 </body>
 </html>

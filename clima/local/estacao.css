@@ -97,8 +97,6 @@ body {
 }
 
 /* CONTEÚDO DA ESTAÇÃO */
-
-/* Nome da Estação e Data/Hora da última leitura */
 .location-header h2 {
   font-size: 1.25rem;
   font-weight: 600;
@@ -117,7 +115,6 @@ body {
   margin-top: 4px;
 }
 
-/* Umidade do Solo em Destaque */
 .main-weather {
   display: flex;
   align-items: center;
@@ -157,7 +154,6 @@ body {
   color: #38bdf8;
 }
 
-/* Detalhes do Clima e Sensores */
 .weather-details {
   display: flex;
   gap: 12px;
@@ -191,8 +187,6 @@ body {
   font-weight: 600;
 }
 
-
-/* Outros Sensores da Estação */
 .forecast-section h3 {
   font-size: 0.85rem;
   color: #94a3b8;
@@ -238,10 +232,9 @@ body {
 .forecast-card a:active {
   text-decoration: none;
   color: inherit;
-  
 }
 
-.links{
+.links {
   text-decoration: none;
 }
 
