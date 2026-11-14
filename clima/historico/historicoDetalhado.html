@@ -3,67 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Histórico - Estação Meteorológica</title>
+  <title>Histórico Detalhado - Estação Meteorológica</title>
   
   <!-- Estilos e Ícones -->
   <link rel="stylesheet" href="historicoDetalhado.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
+
 <body>
 
-  <!-- Container principal (Card Glassmorphism) -->
+  <!-- Container principal (Card Glassmorphism Ampliado) -->
   <div class="weather-card wide-card">
     
     <div class="location-header">
-      <h2><i class="ph ph-table"></i> <span>Tabela de Histórico da Estação</span></h2>
-      <p id="current-date">Carregando histórico...</p>
+      <h2><i class="ph ph-table"></i> <span>Histórico Detalhado e Dados da Estação</span></h2>
+      <p id="current-date">Carregando histórico completo...</p>
     </div>
 
+    
     <!-- CAIXA DE STATUS -->
     <div id="status-message" class="status-message hidden"></div>
 
-    <!-- TABELA DE HISTÓRICO COM SCROLL HORIZONTAIS -->
-    <div class="table-responsive">
-      <table id="history-table">
-        <thead>
-          <tr>
-            <th>Data / Hora</th>
-            <th>Solo (%)</th>
-            <th>Status Solo</th>
-            <th>Temp. Ar</th>
-            <th>Umidade Ar</th>
-            <th>Pressão</th>
-            <th>Chuva</th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <!-- Dados injetados via JavaScript -->
-        </tbody>
-      </table>
-    </div>
 
-    <br>
+      <!-- TABELA DE HISTÓRICO COM SCROLL HORIZONTAL -->
+      <div class="table-responsive">
+        <table id="history-table">
+          <thead>
+            <tr>
+              <th>Data / Hora</th>
+              <th>Solo 15cm</th>
+              <th>Solo 30cm</th>
+              <th>Média Solo</th>
+              <th>Temp. Ar</th>
+              <th>Umidade Ar</th>
+              <th>Pressão</th>
+              <th>Chuva</th>
+              <th>Bateria</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+            <!-- Dados injetados via JavaScript -->
+          </tbody>
+        </table>
+      </div>
 
+      <br>
 
-    <!-- BOTÃO DE VOLTAR -->
-        <div class="forecast-section">
-          <a class="links" href="historico.html">
-            <div class="forecast-card" style="text-align: center;">
-              <p class="day">Voltar</p>
-              <i class="ph ph-arrow-fat-line-left"></i>
-            </div>
-          </a>
+      <!-- BOTÕES DE VOLTAR -->
+      <div class="forecast-section">
+        <a class="links" href="historico.html">
+          <div class="forecast-card" style="text-align: center;">
+            <p class="day"><i class="ph ph-arrow-fat-line-left"></i> Voltar aos Gráficos</p>
+          </div>
+        </a>
 
-          <a class="links" href="../local/estacao.html">
-            <div class="forecast-card" style="text-align: center;">
-              <p class="day">Voltar</p>
-              <i class="ph ph-arrow-fat-line-left"></i><i class="ph ph-arrow-fat-line-left"></i>
-              <p class="day">Painel Principal</p>
-            </div>
-          </a>
-
-
+      <a class="links" href="../local/estacao.html">
+        <div class="forecast-card" style="text-align: center;">
+          <p class="day"><i class="ph ph-arrow-fat-line-left"></i> Painel Principal</p>
         </div>
+      </a>
+    </div>
   </div>
 
   <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>

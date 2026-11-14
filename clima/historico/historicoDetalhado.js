@@ -24,15 +24,12 @@ function decodificar(campo) {
   return null;
 }
 
-// Avalia a Umidade do Solo
-function avaliarUmidadeSolo(porcentagem) {
-  if (porcentagem < 30) {
-    return "Solo Seco (Irrigar)";
-  } else if (porcentagem <= 70) {
-    return "Solo Ideal";
-  } else {
-    return "Solo Encharcado";
-  }
+// Converte o valor bruto (raw) do solo em porcentagem usando a fórmula de calibração
+function calcularUmidadePorRaw(raw) {
+  const L = Number(raw);
+  if (isNaN(L) || L <= 0) return 0.0;
+  let porcentagem = (-0.182 * L) + 163.6;
+  return Math.max(0, Math.min(100, porcentagem));
 }
 
 async function buscarHistoricoCompleto() {
@@ -78,37 +75,58 @@ async function buscarHistoricoCompleto() {
           horario = dataObj.toLocaleDateString("pt-BR", {
             day: "2-digit",
             month: "2-digit",
+            year: "numeric",
             hour: "2-digit",
-            minute: "2-digit"
+            minute: "2-digit",
+            second: "2-digit"
           });
         }
       }
 
-      const soilVal = Number(decodificar(campos.soil) || 0).toFixed(1);
+      // Sensores de Solo
+      const raw1 = decodificar(campos.soilRaw1) ?? decodificar(campos.soil) ?? 0;
+      const raw2 = decodificar(campos.soilRaw2) ?? decodificar(campos.soil) ?? 0;
+      const soil15 = calcularUmidadePorRaw(raw1);
+      const soil30 = calcularUmidadePorRaw(raw2);
+      const mediaSolo = (soil15 + soil30) / 2;
+
+      // Sensores Ambientais
       const tempVal = Number(decodificar(campos.temp) || 0).toFixed(1);
       const humVal = Number(decodificar(campos.hum) || 0).toFixed(1);
       const pressaoVal = Number(decodificar(campos.pabs) || 1013.2).toFixed(1);
-      const chuvaVal = Boolean(decodificar(campos.rain));
 
-      const statusTexto = avaliarUmidadeSolo(soilVal);
-      const statusChuva = chuvaVal ? "Chovendo 🌧️" : "Sem Chuva ☀️";
+     
+      // Tratamento inteligente e sensível de chuva
+      const rainRaw = decodificar(campos.rainRaw) ?? 4095;
+      const digitalChuva = decodificar(campos.digitalChuva);
+      const boolChuvaOriginal = Boolean(decodificar(campos.rain));
+      
+      // Considera chuva se o pino digital for 0 OU se o valor analógico cair abaixo de 3800 (mais sensível) OU se o booleano original for true
+      const chovendo = (digitalChuva === 0) || (rainRaw < 3800) || boolChuvaOriginal;
+      const statusChuva = chovendo ? "Chovendo 🌧️" : "Sem Chuva ☀️";
 
+      // Bateria
+      const batteryPercent = decodificar(campos.batteryPercent) ?? decodificar(campos.battery) ?? "-";
+
+      // Criação da linha da tabela (sem contador de pacotes e sem os textos Raw)
       const row = document.createElement("tr");
       
       row.innerHTML = `
         <td>${horario || "Desconhecido"}</td>
-        <td style="font-weight: bold; color: #38bdf8;">${soilVal}%</td>
-        <td>${statusTexto}</td>
+        <td style="font-weight: bold; color: #10b981;">${soil15.toFixed(1)}%</td>
+        <td style="font-weight: bold; color: #f59e0b;">${soil30.toFixed(1)}%</td>
+        <td style="font-weight: bold; color: #38bdf8;">${mediaSolo.toFixed(1)}%</td>
         <td>${tempVal} °C</td>
         <td>${humVal}%</td>
         <td>${pressaoVal} hPa</td>
         <td>${statusChuva}</td>
+        <td>${batteryPercent}%</td>
       `;
 
       tableBody.appendChild(row);
     });
 
-    currentDateEl.textContent = "Exibindo as leituras mais recentes da estação.";
+    currentDateEl.textContent = "Exibindo as leituras detalhadas e registros da estação.";
     hideStatus();
 
   } catch (error) {

@@ -25,8 +25,30 @@ body {
   border-radius: 24px;
   padding: 28px;
   width: 100%;
-  max-width: 420px;
+  max-width: 1200px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.weather-card wide-card{
+  max-width: 1200px;
+}
+.location-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.location-header h2 i {
+  color: #38bdf8;
+}
+
+.location-header p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
 
 /* Card mais largo para acomodar a tabela detalhada */
@@ -53,24 +75,6 @@ body {
 
 .hidden {
   display: none !important;
-}
-
-.location-header h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.location-header h2 i {
-  color: #38bdf8;
-}
-
-.location-header p {
-  color: #94a3b8;
-  font-size: 0.85rem;
-  margin-top: 4px;
 }
 
 /* Estilização da Tabela de Histórico */
