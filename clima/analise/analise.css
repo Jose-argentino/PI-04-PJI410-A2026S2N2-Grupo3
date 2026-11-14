@@ -1,40 +1,167 @@
-.recommendation-card {
-      padding: 16px 20px;
-      border-radius: 16px;
-      color: #f8fafc;
-      font-weight: 600;
-      margin-top: 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.3s ease;
-    }
-    .status-green { 
-      background: rgba(46, 125, 50, 0.4); 
-      border-color: rgba(46, 125, 50, 0.5);
-    }  /* Não precisa irrigar */
-    .status-yellow { 
-      background: rgba(245, 127, 23, 0.4); 
-      border-color: rgba(245, 127, 23, 0.5);
-    } /* Atenção / Intervenção breve */
-    .status-red { 
-      background: rgba(198, 40, 40, 0.4); 
-      border-color: rgba(198, 40, 40, 0.5);
-    }    /* Necessário irrigação */
+/* Importação dos estilos base do projeto ou reaproveitamento dos padrões */
+body {
+  background: linear-gradient(135deg, #a5bbec, #496696);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: #f8fafc;
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+}
 
-    .recommendation-card i { 
-      font-size: 2.2rem; 
-      color: #38bdf8; 
-    }
-    .recommendation-text h4 { 
-      margin: 0 0 4px 0; 
-      font-size: 1.05rem; 
-      font-weight: 600;
-    }
-    .recommendation-text p { 
-      margin: 0; 
-      font-weight: 400; 
-      font-size: 0.85rem; 
-      color: #cbd5e1;
-    }
+.weather-card {
+  background: rgba(30, 41, 59, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+.weather-card.wide-card {
+  max-width: 1000px;
+}
+
+.status-message {
+  text-align: center;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  font-size: 0.85rem;
+  background: rgba(239, 68, 68, 0.2);
+  color: #eb4242;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.status-message.loading {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.hidden {
+  display: none !important;
+}
+
+.location-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.location-header h2 i {
+  color: #38bdf8;
+}
+
+.location-header p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Estilos dos Cards de Recomendação Dinâmicos */
+.recommendation-card {
+  padding: 16px 20px;
+  border-radius: 16px;
+  color: #f8fafc;
+  font-weight: 600;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.status-green { 
+  background: rgba(46, 125, 50, 0.4); 
+  border-color: rgba(46, 125, 50, 0.5);
+}  /* Não precisa irrigar */
+
+.status-yellow { 
+  background: rgba(245, 127, 23, 0.4); 
+  border-color: rgba(245, 127, 23, 0.5);
+} /* Atenção / Intervenção breve */
+
+.status-red { 
+  background: rgba(198, 40, 40, 0.4); 
+  border-color: rgba(198, 40, 40, 0.5);
+}    /* Necessário irrigação */
+
+.recommendation-card i { 
+  font-size: 2.2rem; 
+  color: #38bdf8; 
+}
+
+.recommendation-text h4 { 
+  margin: 0 0 4px 0; 
+  font-size: 1.05rem; 
+  font-weight: 600;
+}
+
+.recommendation-text p { 
+  margin: 0; 
+  font-weight: 400; 
+  font-size: 0.85rem; 
+  color: #cbd5e1;
+}
+
+/* Seções de Navegação */
+.forecast-section {
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+}
+
+.forecast-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.forecast-card:hover {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.forecast-card .day {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.forecast-card i {
+  font-size: 1.2rem;
+  color: #38bdf8;
+}
+
+a.links {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  flex: 1;
+}
+
+#fonte {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

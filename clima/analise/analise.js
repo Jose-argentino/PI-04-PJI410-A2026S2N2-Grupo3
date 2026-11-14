@@ -1,4 +1,4 @@
-// URL Firestore REST API do seu projeto
+// URL do Firestore REST API da Estação Meteorológica
 const URL_FIRESTORE = "https://firestore.googleapis.com/v1/projects/gen-lang-client-0853696923/databases/ai-studio-remixagroirrigam-5a5bb94c-bad7-4521-b4d3-c959f2e7b3a6/documents:runQuery?key=AIzaSyAafzTja9e_zsRTK3HfoI0hwXGcygbAQiE";
 
 const statusMessage = document.getElementById("status-message");

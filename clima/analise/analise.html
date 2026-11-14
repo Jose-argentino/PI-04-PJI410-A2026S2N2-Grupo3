@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Previsão e Recomendação de Irrigação (IA)</title>
   
+  <!-- Estilos e Ícones -->
+  <link rel="stylesheet" href="analise.css">
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <!-- Chart.js para o gráfico combinado (Real + Previsão) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  <link rel="stylesheet" href="analise.css">
 </head>
 
 <body>
 
-  <div class="weather-card" style="max-width: 850px; margin: 20px auto;">
+  <!-- Container principal com a mesma classe e visual em Glassmorphism da referência -->
+  <div class="weather-card wide-card">
     
     <div class="location-header">
       <h2><i class="ph ph-trend-up"></i> <span>Previsão de Umidade & Recomendação IA</span></h2>
@@ -40,18 +41,26 @@
 
     <br>
 
-    <!-- NAVEGAÇÃO -->
+    <!-- NAVEGAÇÃO DE BOTÕES (Mesmo padrão da referência) -->
     <div class="forecast-section">
-      <a class="links" href="index.html">
+      <a class="links" href="historico.html">
         <div class="forecast-card" style="text-align: center;">
-          <p class="day"><i class="ph ph-arrow-left"></i> Voltar ao Painel Principal</p>
+          <p class="day">Histórico Detalhado</p>
+          <i class="ph ph-table"></i>
+        </div>
+      </a>
+
+      <a class="links" href="../local/estacao.html">
+        <div class="forecast-card" style="text-align: center;">
+          <p class="day">Painel Principal</p>
+          <i class="ph ph-arrow-fat-line-left"></i>
         </div>
       </a>
     </div>
 
   </div>
 
-  <p id="fonte">Fonte: Estação Telemetria FIRESTORE</p>
+  <p id="fonte">Fonte: Estação Telemetria FIRESTORE | Modelo: Regressão Linear / Tendência</p>
 
   <script src="analise.js"></script>
 </body>
